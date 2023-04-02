@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  // final String name;
+   final String name;
   // final String profileImage;
 
-  // HomePage({required this.name, required this.profileImage});
+   HomePage({required this.name, /*required this.profileImage */});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Nama",
+                    name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blue,

@@ -1,6 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/home_page.dart';
+import 'home_page.dart';
 import 'login_page.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -173,7 +173,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print("Test");
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => HomePage(
+                            name: _name,
+                          ),
+                        ));
                       }
                     },
                     child: Text('Register'),
