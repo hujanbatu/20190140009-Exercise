@@ -20,7 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String _password = '';
   String _confirmPassword = '';
 
-  String? _selectedPhoto;
+  String _selectedPhoto= '';
 
   bool _isObscure = true; // added boolean variable
   bool _isObscureConfirm = true; // added boolean variable
@@ -61,7 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             shape: BoxShape.circle,
                             image: _selectedPhoto != null
                                 ? DecorationImage(
-                                    image: AssetImage(_selectedPhoto!),
+                                    image: AssetImage(_selectedPhoto),
                                     fit: BoxFit.cover,
                                   )
                                 : null,
@@ -195,6 +195,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => HomePage(
                             name: _name,
+                            selectedPhoto: _selectedPhoto,
                           ),
                         ));
                       }

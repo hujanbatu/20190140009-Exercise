@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-   final String name;
-  // final String profileImage;
+  final String name;
+  final String selectedPhoto;
 
-   HomePage({required this.name, /*required this.profileImage */});
+  HomePage({
+    required this.name,
+    required this.selectedPhoto,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +41,26 @@ class HomePage extends StatelessWidget {
                   ),
                 ]),
                 CircleAvatar(
-                  backgroundImage: NetworkImage("profileImage"),
-                  radius: 25,
+                  radius: 25.0,
+                  backgroundColor: Colors.grey[200],
+                  child: ClipOval(
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: selectedPhoto != null
+                            ? DecorationImage(
+                                image: AssetImage(selectedPhoto),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                      child: selectedPhoto == null
+                          ? Icon(Icons.add_a_photo)
+                          : null,
+                    ),
+                  ),
                 ),
               ],
             ),
