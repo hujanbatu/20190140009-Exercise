@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'signup_page.dart';
 
 class LoginPage extends StatefulWidget {
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -52,12 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 40.0),
                     TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your Name';
-                        }
-                        return null;
-                      },
+
                       onChanged: (value) {
                         setState(() {
                           _name = value;
@@ -72,15 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 16.0),
                     TextFormField(
                       obscureText: _obscureText,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters long';
-                        }
-                        return null;
-                      },
+
                       onChanged: (value) {
                         setState(() {
                           _password = value;
@@ -108,9 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 24.0),
                     ElevatedButton(
                       onPressed: () {
-                        // if (_formKey.currentState.validate()) {
-                        //   // TODO: Sign in logic here
-                        // }
+                        
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -135,10 +121,11 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Text('Don\'t have an account? '),
                         TextButton(
-                           onPressed: () {
+                          onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SignUpPage()),
+                              MaterialPageRoute(
+                                  builder: (context) => SignUpPage()),
                             );
                           },
                           child: Text(

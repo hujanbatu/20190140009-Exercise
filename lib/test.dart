@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'login_page.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -9,10 +6,10 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -23,6 +20,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
   bool _isObscure = true; // added boolean variable
   bool _isObscureConfirm = true; // added boolean variable
+
+  String? _validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter some text';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(height: 16.0),
                   TextFormField(
                     keyboardType: TextInputType.name,
-                    controller: _nameController,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your name';
-                      } else if (value.length < 6) {
-                        return 'Name must be at least 6 characters';
-                      }
-                    },
+                    controller: nameController,
                     onChanged: (value) {
                       setState(() {
                         _name = value;
@@ -77,17 +74,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(height: 16.0),
                   TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _emailController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email address';
-                      }
-                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                          .hasMatch(value)) {
-                        return 'Please enter a valid email address';
-                      }
-                    },
                     onChanged: (value) {
                       setState(() {
                         _email = value;
@@ -101,16 +87,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(height: 16.0),
                   TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _passwordController,
                     obscureText: _isObscure,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a password';
-                      } else if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
-                      }
-                    },
                     onChanged: (value) {
                       setState(() {
                         _password = value;
@@ -120,33 +97,23 @@ class _SignUpPageState extends State<SignUpPage> {
                       labelText: 'Password',
                       border: UnderlineInputBorder(),
                       prefixIcon: Icon(Icons.lock),
-                      suffixIcon: IconButton(
+                      suffix: InkWell(
                         // added suffixIcon
-                        icon: Icon(_isObscure
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        onPressed: () {
+                        onTap: () {
                           setState(() {
                             _isObscure = !_isObscure;
                           });
                         },
+                        child: Icon(
+                          _isObscure ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),
                   SizedBox(height: 16.0),
                   TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _confirmPasswordController,
                     obscureText: _isObscureConfirm,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please confirm your password';
-                      }
-                      if (value !=
-                          _password) {
-                        return 'Passwords must be the same';
-                      }
-                    },
                     onChanged: (value) {
                       setState(() {
                         _confirmPassword = value;
@@ -156,16 +123,17 @@ class _SignUpPageState extends State<SignUpPage> {
                       labelText: 'Confirm Password',
                       border: UnderlineInputBorder(),
                       prefixIcon: Icon(Icons.lock),
-                      suffixIcon: IconButton(
+                      suffix: InkWell(
                         // added suffixIcon
-                        icon: Icon(_isObscureConfirm
-                            ? Icons.visibility
-                            : Icons.visibility_off),
-                        onPressed: () {
+                        onTap: () {
                           setState(() {
                             _isObscureConfirm = !_isObscureConfirm;
                           });
                         },
+                        child: Icon(
+                          _isObscureConfirm ? Icons.visibility : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),
@@ -173,7 +141,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        print("Test");
+                        print("Success");
+                        nameController.clear();
+                        emailController.clear();
+                        passwordController.clear();
+                        confirmPasswordController.clear();
                       }
                     },
                     child: Text('Register'),
