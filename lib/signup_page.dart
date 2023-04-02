@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/home_page.dart';
 import 'home_page.dart';
 import 'login_page.dart';
 
@@ -20,6 +19,8 @@ class _SignUpPageState extends State<SignUpPage> {
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
+
+  String? _selectedPhoto;
 
   bool _isObscure = true; // added boolean variable
   bool _isObscureConfirm = true; // added boolean variable
@@ -43,14 +44,33 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  CircleAvatar(
-                    radius: 50.0,
-                    backgroundColor: Colors.grey[200],
-                    child: IconButton(
-                      icon: Icon(Icons.add_a_photo),
-                      onPressed: () {
-                        // TODO: Implement image upload logic
-                      },
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedPhoto = 'assets/img/004.png';
+                      });
+                    },
+                    child: CircleAvatar(
+                      radius: 50.0,
+                      backgroundColor: Colors.grey[200],
+                      child: ClipOval(
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: _selectedPhoto != null
+                                ? DecorationImage(
+                                    image: AssetImage(_selectedPhoto!),
+                                    fit: BoxFit.cover,
+                                  )
+                                : null,
+                          ),
+                          child: _selectedPhoto == null
+                              ? Icon(Icons.add_a_photo)
+                              : null,
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: 16.0),
@@ -142,8 +162,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       if (value!.isEmpty) {
                         return 'Please confirm your password';
                       }
-                      if (value !=
-                          _password) {
+                      if (value != _password) {
                         return 'Passwords must be the same';
                       }
                     },
